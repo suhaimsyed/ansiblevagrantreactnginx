@@ -1,0 +1,12 @@
+---
+- name: Install nginx webserver
+  apt:
+    name: nginx
+    update_cache: true
+  become: true
+
+- name: Copy template configuration.js for client ports
+  template: src=templates/default.j2 dest=/etc/nginx/sites-available/default
+  become: yes
+  notify:
+    - restart nginx  

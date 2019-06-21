@@ -1,0 +1,10 @@
+---
+- hosts: webappservers
+  vars_files:
+    - env/global.yml
+    - env/vault.yml    
+  roles:
+    - git
+    - npm
+    - react
+    - ngnix

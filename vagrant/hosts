@@ -1,0 +1,9 @@
+# Right now the library only has a single server for everything.
+# It's mostly a web server, but also has databases on it.
+
+[all:vars]
+env=vagrant
+
+[webappservers]
+webappservers
+

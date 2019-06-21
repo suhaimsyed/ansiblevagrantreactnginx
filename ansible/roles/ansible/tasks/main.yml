@@ -1,0 +1,6 @@
+---
+# file: roles/ansible/tasks/main.yml
+
+  - name: Install Ansible
+    apt: name=ansible update_cache=yes
+    become: yes

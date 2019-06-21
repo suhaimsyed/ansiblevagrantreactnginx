@@ -1,0 +1,1 @@
+{"virtualbox":{"/tmp/foo":{"guestpath":"/tmp/foo","hostpath":"/private/tmp","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/suhaim.mohamed/Sites/reactansible/vagrant","disabled":false,"__vagrantfile":true}}}

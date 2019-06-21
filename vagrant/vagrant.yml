@@ -1,0 +1,21 @@
+---
+# file: vagrant.yml
+- name : prepare vagrant/ubuntu
+  hosts: all
+
+  tasks:
+
+  - debug:
+      var: "ansible_user"
+      verbosity: 3
+      
+  - name: Create user ubuntu 
+    user:
+      name: "{{ ansible_user }}"
+      groups: "{{ ansible_user }}"
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: ".ssh/id_rsa"
+    become: yes
+
+- import_playbook: ../ansible/frontendserver.yml

@@ -1,0 +1,17 @@
+---
+- name: npm install
+  shell: >
+    cd {{ frontend_deployment_path }};
+    npm config set strict-ssl false;
+    npm install
+  become: yes 
+
+- name: npm install build
+  shell: >
+    cd {{ frontend_deployment_path }};
+    npm start
+  become: yes   
+
+- name: Copy template configuration.js for client ports
+  template: src=templates/webpack.config.js.j2 dest={{ frontend_deployment_path }}/webpack.config.js
+  become: yes

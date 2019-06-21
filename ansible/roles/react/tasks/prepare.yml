@@ -1,0 +1,45 @@
+---
+## we can segregate the activities as diff roles
+## or as diff tasks
+- name: Create a group react
+  group: name={{ frontend_group }} system=yes
+  become: yes
+
+- name: Create a user react
+  user: name={{ frontend_owner }} group={{ frontend_group }} system=yes
+  become: yes
+
+- name: Create react directory
+  file: 
+    path={{ frontend_deployment_path }}
+    state=directory
+    mode=0755
+    owner="{{ frontend_owner }}"
+    group="{{ frontend_group }}"
+  become: yes
+
+
+- name: Checking out code to workspace
+  git:
+    repo: "{{ git_frontend_path }}"
+    dest: "{{ frontend_deployment_path }}"#
+    force: yes
+  become: yes
+
+- name: Ensure npm global packages are installed.
+  npm:
+    name: "{{ item.name | default(item) }}"
+    version: "{{ item.version | default('latest') }}"
+    global: true
+    state: latest
+  environment:
+    NPM_CONFIG_PREFIX: "{{ npm_config_prefix }}"
+    NODE_PATH: "{{ npm_config_prefix }}/lib/node_modules"
+    NPM_CONFIG_UNSAFE_PERM: "{{ npm_config_unsafe_perm }}"
+  with_items: "{{ nodejs_npm_global_packages }}"
+  tags: ['skip_ansible_lint']
+
+- name: Setup strict-ssl which is only a temp fix to solve the diff npm version
+  shell: >
+    npm config set strict-ssl false
+  become: yes
